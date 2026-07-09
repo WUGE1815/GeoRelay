@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 网络配置：允许明文 HTTP 流量（内网调试场景） -->
+<network-security-config>
+    <domain includeSubdomains="true">127.0.0.1</domain>
+    <domain includeSubdomains="true">localhost</domain>
+    <base-config cleartextTrafficPermitted="true" />
+</network-security-config>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  自愿共享位置系统 - 共享端 AndroidManifest.xml
+
+  权限说明：
+  - ACCESS_FINE_LOCATION: 精确定位（必需）
+  - ACCESS_COARSE_LOCATION: 粗略定位（GPS 不可用时降级）
+  - FOREGROUND_SERVICE: 前台服务（Android 9+）
+  - FOREGROUND_SERVICE_LOCATION: 前台服务类型（Android 14+）
+  - INTERNET: 网络访问（上传定位数据）
+  - POST_NOTIFICATIONS: 通知栏显示（Android 13+）
+  - RECEIVE_BOOT_COMPLETED: 开机广播接收（仅用于显示通知，不自启服务）
+  - ACCESS_NETWORK_STATE: 检测网络状态
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.locationshare">
+
+    <!-- 网络权限 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!-- 定位权限 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <!-- 前台服务权限 -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" />
+
+    <!-- 通知权限 (Android 13+) -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <!-- 开机广播（仅接收通知，不会自动启动定位服务） -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <!-- 忽略电池优化（非强制，仅在使用者主动授权后生效） -->
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="位置共享"
+        android:theme="@style/Theme.LocationShare">
+
+        <!-- 主 Activity -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- 前台定位服务 -->
+        <service
+            android:name=".LocationShareService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="location" />
+
+        <!-- 开机广播接收器 —— 仅弹通知提醒，不自动开启定位 -->
+        <receiver
+            android:name=".BootReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+    </application>
+</manifest>

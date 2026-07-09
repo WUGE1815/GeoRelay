@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">位置共享</string>
+
+    <!-- 通知渠道配置 -->
+    <string name="share_channel_id">location_share_channel</string>
+    <string name="share_channel_name">位置共享服务</string>
+    <string name="share_channel_desc">位置共享前台服务的常驻通知</string>
+
+    <!-- 通知标题 -->
+    <string name="notif_title">位置共享中</string>
+    <string name="notif_text">正在实时采集并上传您的位置信息</string>
+</resources>
